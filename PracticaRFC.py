@@ -8,7 +8,7 @@ class AutomataRFC:
         self.root = tk.Tk()
         self.root.title("Validación de RFC")
 
-        self.entry_label = tk.Label(self.root, text="Ingrese la cadena RFC:")
+        self.entry_label = tk.Label(self.root, text="Ingrese la cadena RFC: OOEM")
         self.entry_label.pack()
 
         self.entry = tk.Entry(self.root)
@@ -23,6 +23,10 @@ class AutomataRFC:
     def validar_rfc_and_show(self):
         rfc = self.entry.get().upper()
         
+        if len(rfc) > 4:
+            self.result_label.config(text="Cadena RFC no válida. Debe contener exactamente 4 letras.")
+            return
+        
         if rfc[0] != 'O':
             self.result_label.config(text="Cadena RFC no válida. El estado inicial debe ser 'O'.")
             return
@@ -32,9 +36,9 @@ class AutomataRFC:
             if letra not in ['O', 'E', 'M']:
                 self.result_label.config(text="Cadena RFC no válida. Las letras deben ser 'OOEM'.")
                 return
-            if letra in letters_seen:
-                self.result_label.config(text=f"Cadena RFC no válida. La letra '{letra}' aparece más de una vez o más.")
-                return
+            # if letra in letters_seen:
+            #     self.result_label.config(text=f"Cadena RFC no válida. La letra '{letra}' aparece más de una vez o más.")
+            #     return
             letters_seen.add(letra)
 
         self.result_label.config(text="Cadena RFC válida.")
